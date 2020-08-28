@@ -33,3 +33,20 @@ list(permutations(items, 2))
 from itertools import combinations 조합
 list(combinations(items, 2))
 # [('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), ('2', '3'), ('2', '4'), ('2', '5'), ('3', '4'), ('3', '5'), ('4', '5')]
+
+
+<3번째 풀이>
+*개념: 1번째 풀이와 같지만 enumerate사용
+
+def solution(numbers, target):
+    candidate = [[0]]
+
+    for i, numbers in enumerate(numbers): # enumerate를 쓰면 (0,1), (1,2),(2,3)... 이러한 식으로 변환한다.  
+        temp = [] # 새롭게 담을 공간 확보
+        for value in candidate[i]:
+            temp.append(value + number)
+            temp.append(value - number)
+        candidate.append(temp)
+
+    return(candidate[-1].count(target))
+
