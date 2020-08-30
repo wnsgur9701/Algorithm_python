@@ -1,0 +1,39 @@
+<내가 한 풀이>
+def solution(people, limit):
+    count = 0
+    length = len(people)
+    people.sort()
+    if length == 1: #길이가 1짜리 배열이면 그냥 1 리턴
+        return 1
+    stand = length - 1 #마지막것부터 검사
+    for i in range(length): #0번째 부터 검사
+        if i == stand: #만약 시작하는 점과 끝에 점이 같다면 더이상 검사 불가. 답 도출
+            answer = length - count
+            return answer
+        for j in range(stand,i,-1): #끝 점부터 검사
+            if people[i] + people[j] <= limit:
+                count += 1
+                stand = j - 1
+                break
+            # 다 검사해도 없으면 답 그냥 도출.
+        else:
+            answer = length - count
+            return answer
+
+
+
+
+<우수풀이>
+
+def solution(people, limit) :
+    answer = 0
+    people.sort()
+
+    a = 0		# 이 문제에서 중요한 것은 시작점과 끝점을 잡는 것
+    b = len(people) - 1 # 마지막 index
+    while a < b : # len가 1만 아니면 무조건 성립
+        if people[b] + people[a] <= limit : #합이 limit보다 작으면 a를 한칸 땡기고 answer추가 
+            a += 1 
+            answer += 1
+        b -= 1 둘의 합이 limit보다 크던 작던 -1은 무조건 한다.
+    return len(people) - answer
