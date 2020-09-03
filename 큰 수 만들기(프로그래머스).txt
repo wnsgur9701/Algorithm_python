@@ -1,0 +1,34 @@
+<내 풀이>
+그러나 시간 초과....
+
+from itertools import combinations
+def solution(number, k):
+    a = [i for i in range(len(number))] # 모든 자릿수의 리스트
+    b = list(combinations(a,k)) # b = 제거하는 모든 자릿 수 조합[(0,1,2),(0,1,3)...]과 같은 형태
+    answer = [] # 빈 list 생성
+    for i in b: # 여기서 i는 (0,1,2)와 같은 형태이다. 
+        temp = sorted(i) # sort()는 tuple형에서 못쓴다.  tuple은 sorted를 통해 list형으로 바꾸어 주어야 한다. 
+        temp.reverse() # 이게 중요하다. 작은 수 부터 집어 넣으면 삭제하는 숫자 때문에 번호가 1칸씩 왼쪽으로 밀린다. 따라서 큰 수부터 정렬해야 한다.
+        candidate = number # 업데이트를 계속 해주어야 하기 때문
+        for j in temp: # temp중 가장 큰 수 부터
+            candidate = candidate[:j] + candidate[j+1:] #string 형이기 때문에 이러한 식으로 없애야 한다.
+        answer.append(candidate) # answer에 값 추가
+    return max(answer)
+
+
+
+<답>
+먼저 그리디 알고리즘의 개념을 알자.
+그리디 알고리즘이란 작은 것부터 계속 비교해서 결국 최적의 값을 찾는 것이다.
+여기서는 stack을 이용했다.
+def solution(number, k):
+    alist = [number[0]] #stack에 0번째 숫자를 넣어준다
+    for num in number[1:]: # 1번째 숫자부터 끝에 있는 숫자까지 비교
+        while len(alist) > 0 and alist[-1] < num and k > 0: 
+        #바꾸는 경우---> 새로들어온수가 기존수보다 크거나, k가 0이 안됐거나, alist 0개가 아닐때 
+            alist.pop() #가장 마지막의 수 뺀다. 예를 들어 986에서 7이 들어온다고 하면 6이 빠지는 것이다. 
+            k -= 1 #빠지면 k = k -1을 해준다
+        alist.append(num) #그리고 그 숫자를 alist에 넣어준다.
+    if k != 0: #for문 다 돌았는데 k가 안찼을때 즉, 10000과 같은 상황 
+        alist = alist[:-k]
+    return ''.join(alist)
