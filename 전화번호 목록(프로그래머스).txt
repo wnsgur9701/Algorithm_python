@@ -1,0 +1,36 @@
+## 프로그래머스 해시 전화번호 목록
+
+##문제설명.
+전화번호부에 적힌 전화번호 중, 한 번호가 다른 번호의 접두어인 경우가 있는지 확인하려 합니다.
+전화번호가 다음과 같을 경우, 구조대 전화번호는 영석이의 전화번호의 접두사입니다.
+
+구조대 : 119
+박준영 : 97 674 223
+지영석 : 11 9552 4421
+전화번호부에 적힌 전화번호를 담은 배열 phone_book 이 solution 함수의 매개변수로 주어질 때, 
+어떤 번호가 다른 번호의 접두어인 경우가 있으면 false를 그렇지 않으면 true를 return 하도록 solution 함수를 작성해주세요.
+
+
+##나의 코드
+def solution(phone_book):
+    state = True
+    phone_book.sort(key=len)
+    for num1 in range(len(phone_book)):
+        l = len(phone_book[num1])
+        for num2 in range(num1+1,len(phone_book)):
+            if phone_book[num1] == phone_book[num2][:l]:
+                state = False
+                break
+        if state == False:
+            break
+    return state
+
+##중요한 점.
+해시를 사용하는 가장 큰 이유는 효율성의 문제이다. 최소한의 반복으로 답을 찾아내는 게 우선이다. 그리고 n번째 변수를 0~3 만큼 자를려고 하면 array[n][0:4]이런 식으로 자르면 된다.
+
+##코드해설.
+먼저 같은 부분을 발견하면 바로 빠져나오기 위해서 state 변수를 설정하였다. 그리고 길이를 기준으로 sort하는 것이 검색하는 경우의 수를 가장 줄여주기 때문에 sort(key=len)로 해주었다
+여기서 비교 기준이 되는 변수는 길이가 가장 짧은 것이기 때문에 다른 것과 비교를 할 때 그 길이 만큼만 잘라서 비교를 해주면 된다. 예시) '123' 과 '123458' 비교할 때 '123'의 길이 만큼을 '12345'를 잘라
+둘을 비교한다. 만약 같은 것이 있으면 state를 False를 해서 바로 for문을 나올 수 있게 한다.
+
+ 
