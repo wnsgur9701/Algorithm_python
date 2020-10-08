@@ -1,0 +1,51 @@
+## 해시 - 베스트 앨범 - 프로그래머스
+문제는 따로 설명 x.
+
+## 사고 과정##
+1. 음악 종류를 키로 하고 각 음악의 길이와 그 순서를 담을 수 있는 튜플의 배열로 되어 있는 dic만들기
+2. 음악 종류를 키로 하고 그 종류의 total 길이를 value로 하는 dic만들기 그러나 그 total기준으로 배열이 정렬 되어 있어야한다.
+3. 그 순서를 가지고 처음 만들었던 dic로 들어가 음악의 길이를 기준으로 정렬하고, 그 순서대로 2개까지 뽑아서 정렬.
+
+##코드
+genres = ['classic', 'pop', 'classic', 'classic', 'pop']
+plays = [500, 600, 150, 800, 2500]
+gen_total_play = {}
+gen_dic = {}
+gen_len = len(genres)
+answer = []
+#FOR문 돌면서 한번에 끝내기
+for i in range(gen_len):
+    if genres[i] in gen_dic:
+        gen_dic[genres[i]].append((plays[i],i))
+        gen_total_play[genres[i]] = gen_total_play[genres[i]] + plays[i]
+    else:
+        gen_dic[genres[i]] = [(plays[i],i)]
+        gen_total_play[genres[i]] = plays[i]
+print(gen_dic)
+print(gen_total_play)
+###{'classic': [(500, 0), (150, 2), (800, 3)], 'pop': [(600, 1), (2500, 4)]}###
+###{'classic': 1450, 'pop': 3100}###
+# 여기 까지 필요한 정보 정리끝
+##########이후#############
+# 가장 먼저 해야할 것 --- 합의 순서대로 되어있는 dictionary를 큰수 순서대로 정렬
+sorted_total_play = sorted(gen_total_play.items(), key = lambda x: x[1], reverse=True)
+print(sorted_total_play)
+###[('pop', 3100), ('classic', 1450)]###
+# 1. dictionary.items()는 안에 있는 키 값과 value값을 튜플의 형태로 이루어진 배열로 반환.
+# 2. sorted() lamda의 의미는 따로 정리 // 오름차순 배열이니까 reverse = True를 통해 내림차순 배열 해주어야 함.
+for key in sorted_total_play:
+    play_list = gen_dic[key[0]]
+    play_list = sorted(play_list,key = lambda x : (-x[0],x[1])) # x[0]는 오름차순 / x[1]은 내림차순
+print(play_list)
+###[(800, 3), (500, 0), (150, 2)]###
+    for i in range(len(play_list)):
+        if i == 2:
+            break
+        answer.append(play_list[i][1])
+return answer
+
+
+
+###알 것
+1. 딕션어리에서 items()를 하면 튜플 값으로 배열이 된다.
+2. lambda의 활용(따로 정리).
