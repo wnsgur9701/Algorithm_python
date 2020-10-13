@@ -1,0 +1,25 @@
+# 스택,큐 -- 기능개발 / 프로그래머스
+
+# 다른 사람 풀이.
+
+def solution(progresses, speeds):
+    print(progresses)
+    print(speeds)
+    answer = []
+    time = 0 # 이부분이 중요. 스택의 부분. 계속 쌓아간다.
+    count = 0
+    while len(progresses)> 0: # 완료한 것은 계속 뺼것이기 떄문
+        if (progresses[0] + time*speeds[0]) >= 100: 
+            progresses.pop(0) # 큐의 부분 fifo
+            speeds.pop(0) # speed도 같이 연결되어 있기 때문에 이것도 같이 빼준다.
+            count += 1 # 빼면 그 다음것도 검사해봐야 하기 때문에 count에 더해준다.
+        else:
+            if count > 0: # 완료가 되지 않았지만 이미 축적해놓은 것이 있다면
+                answer.append(count) # 바로 추가
+                count = 0 # 업데이트
+            time += 1 # 시간은 축적.
+    answer.append(count) 
+    return answer
+
+# 스택과 큐에 대한 부분이다. 계속 처음에만 조건을 걸고 뺴는 식
+그리고 time이라는 변수를 두어 계속 축적해 나가는 개념이 좋았다.

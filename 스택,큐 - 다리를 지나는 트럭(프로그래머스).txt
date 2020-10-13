@@ -1,0 +1,28 @@
+스택/큐 - 다리를 지나는 트럭 - 프로그래머스
+
+##코드
+def solution(bridge_length, weight, truck_weights):
+    time = 0 
+    q = [0] * bridge_length 
+    
+    while q: 
+        time += 1 
+        q.pop(0) 
+        if truck_weights:
+            if sum(q) + truck_weights[0] <= weight:
+                q.append(truck_weights.pop(0))
+            else:
+                q.append(0)
+    return time
+
+# 논리 과정.
+1. 중요한 것.
+#####어떻게 정해진 무게를 넘지 않는 범위까지 트럭을 끊을 수 있을까?
+------>사용한 것 : 큐
+예시) [7,4,5,6,4] 무게 범위 10
+여기서는 해당 길이만큼 리스트를 넣어준다. 예를 들어 길이가 5라면 [0,0,0,0,0]
+그리고 리스트에서 맨 앞에 것을 뺀 후 큐에 추가하여 [00007]을 만들어 준다. time = 1
+time =2 -----> [0007]을 만들고 4와 비교하여 합이 10을 넘어가니 [00070]으로 만든다. 이런식으로 작동
+
+# 주의
+pop과 q를 잘 사용해보자. 그리고 while문을 쫌 더 간단히 나중에 사용해 보자.

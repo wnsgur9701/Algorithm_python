@@ -1,0 +1,42 @@
+# 프로그래머스 기능개발(스탤/큐)
+
+# 나의 코드
+
+import math
+def solution(progresses, speeds):
+    # 기본적인 개념. 100 - progresses = 남은 진도율
+    # 올림함수(남은 진도율 / speeds) = 필요한 날짜
+    # 기준 날짜가 비교 날짜보다 크면 기준 날짜가 완료될때 비교 날짜도 같이 완료되는 것
+    day = [] # 필요한 날짜를 담는 배열
+    pro_length = len(progresses)
+    index = 1 # 비교 index ----> 처음은 기준 index보다 1커야 한다.
+    std = 0 # 기준 index
+    count = 1 # 
+    answer = []
+    for i in range(pro_length):
+        d = math.ceil((100-progresses[i])/speeds[i]) # 올림과정
+        day.append(d) # [5, 10, 3, 2] 이러한 식으로 담긴다.
+    while index <= len(day)-1: # 이부분에서 시간이 오래걸림. 마지막을 신경 써줘야 함.
+        if day[std] >= day[index]: # 기준이 더 클때 . 즉 기준이 완료될때 비교도 완료된다.
+            count += 1 
+            if index == len(day) -1: # index가 마지막인 경우에는 추가를 하고 끝내주어야 한다.
+                answer.append(count)
+            index += 1 # 이제 그 옆에것도 비교.
+        else: # 기준이 더 작을 떄. 즉 기준이 완료 되어도 비교는 완료되지 x
+            answer.append(count) # 지금 까지 셋던 count를 바로 추가
+            count = 1 #count 업데이트
+            std = index # 기준도 바꿔준다
+            if std == len(day) -1: # 기준이 마지막인 경우 index가 len(day) -1 을 넘어가기 떄문에 미리
+                answer.append(count) # 추가를 해주어야 한다
+            index += 1 # 그리고 index추가.
+    return answer
+
+
+
+# 알아두어야 할것.
+import math
+math.ceil(x) 는 올림.
+math.floor(x) 는 내림
+반올림은 round
+그리고 기준과 비교를 바꿔주면서 할 때는 while을 써야 한다. 그리고 마지막 경우를 고려해서
+추가를 하고 말고를 잘 결정해야 한다.

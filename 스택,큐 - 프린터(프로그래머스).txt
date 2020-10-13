@@ -1,0 +1,44 @@
+##스택/큐 - 프린터 - 프로그래머스
+
+코드
+def solution(priorities, location):
+    queue =  [(i,p) for i,p in enumerate(priorities)]
+    answer = 0
+    while True:
+        cur = queue.pop(0)
+        if any(cur[1] < q[1] for q in queue):
+            queue.append(cur)
+        else:
+            answer += 1
+            if cur[0] == location:
+                return answer
+
+
+
+
+#중요 개념.
+1. 순서를 포함하여 튜플로 된 큐를 생성한다. ---> [(i,p) for i,p in enumerate(priorities]
+2. any 함수 사용.-----> true 와 false를 return 한다.
+
+
+
+# 나의 풀이.
+def solution(priorities, location):
+    o_prt =[(i,j) for i,j in enumerate(priorities)] # [(0,2),(1,1),(2,3),(3,2)]이러한 식으로 저장
+    count = 0
+    answer = 0
+    while o_prt:
+        temp = o_prt.pop(0) # 둘다 뺀다
+        priorities.pop(0)
+        if temp[1] >= max(priorities): # 남아 있는 수중 가장 큰 것이면
+            count += 1 # 세준다
+            if temp[0] == location: # 그리고 만약 그것이 내가 찾으려는 수면 답에 넣는다
+                answer = count
+                break # 찾으면 빠져 나온다.
+        else: # 아니면
+            o_prt.append(temp) # 맨 뒤에 추가
+            priorities.append(temp[1]) # 맨 뒤에 추가
+    return answer
+
+# 그러나 배열 두개를 사용해서 그런지 시간 초과가 떳다.
+이는 any를 사용해서 해결할 수 있다.
