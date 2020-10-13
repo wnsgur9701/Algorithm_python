@@ -30,6 +30,10 @@ def solution(priorities, location):
     while o_prt:
         temp = o_prt.pop(0) # 둘다 뺀다
         priorities.pop(0)
+#
+        if len(priorities) == 0: # 만약 마지막 수를 빼면 남아있는 것이 아무것도 없기 때문에
+            priorities = [0] # 임의로 이렇게 넣어서 max함수가 인식하게 해야한다.
+#
         if temp[1] >= max(priorities): # 남아 있는 수중 가장 큰 것이면
             count += 1 # 세준다
             if temp[0] == location: # 그리고 만약 그것이 내가 찾으려는 수면 답에 넣는다
@@ -40,5 +44,6 @@ def solution(priorities, location):
             priorities.append(temp[1]) # 맨 뒤에 추가
     return answer
 
-# 그러나 배열 두개를 사용해서 그런지 시간 초과가 떳다.
-이는 any를 사용해서 해결할 수 있다.
+# ~~~# 이게 고친 부분. 고치고 맞았다.
+문제는 max함수가 빈 리스트이면 어떠한 것도 인식을 못한다. 역시 큐나 무엇을 할때
+마지막 경우의 수를 고려하는 것이 가장 중요한 것 같다.
