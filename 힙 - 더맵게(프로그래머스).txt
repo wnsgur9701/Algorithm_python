@@ -1,0 +1,33 @@
+힙 - 더맵게
+
+내 코드
+
+import heapq
+def solution(scoville, K):
+    count = 0   
+    answer = 0
+    heapq.heapify(scoville) # 힙구조로 바꾼다.
+    while scoville: # 안에 숫자가 있을 때까지
+        a = heapq.heappop(scoville) # 가장 작은 수 집어 넣기
+        b = heapq.heappop(scoville) # 그 다음 작은 수 집어 넣기
+        c = a + (2*b) # 계산
+        heapq.heappush(scoville, c) 힙에 넣는다
+        count += 1 # 1번 시행 했으니 기록
+        if scoville[0] >= K: # 가장 작은 수가 K보다 크거나 같은 지 확인 맞다면
+            answer =  count # 바로 반복문 빠져나옴
+            break
+        if len(scoville) == 1 and scoville[0] < K: # 마지막에다가 못찾으면
+            answer = -1 # -1하고 빠져나옴
+            break
+    return answer
+
+
+# 알아두어야 할 것
+힙구조
+힙 구조는 최댓값과 최솟값을 사용할 때 빠르게 구할 수 있다.
+사용하기 위해서는
+1. import heapq
+2. heapq.heapify(배열) # 배열을 힙구조로 만든다.
+3. heapq.heappop(배열) # 가장 작은 수 빼오기
+4. heapq.heappush(배열,넣을 수) # 배열에 넣기
+최대큐는 제공하지 않는다. 나중에 문제가 나오면 그때 다시 정리하자. 
