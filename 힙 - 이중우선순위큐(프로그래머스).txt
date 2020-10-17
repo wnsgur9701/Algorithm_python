@@ -1,0 +1,37 @@
+힙 - 이중우선순위큐 - 프로그래머스
+
+#내코드
+def solution(operations):
+    temp = []	# input된 데이터 담는 곳
+    answer = []	# 마지막 답을 담을 공간.
+    for i in range(len(operations)): # 모든 배열 차례대로 검사
+        if "I" in operations[i]:	# 만약 input이라면
+            temp.append(int(operations[i][2:]))	#I를 제외하고 숫자를 답는다
+            temp.sort()	#오름차순으로 배열 정리
+        else:	# 만약 빼는 것(D가 입력)
+            if len(temp) == 0:	#만약 temp에 뺄 것이 아무것도 없다면
+                continue	# 무효처리
+            if int(operations[i][2:]) == 1:	# 최댓값을 뽑으라고 하면
+                temp.pop(-1)	# 마지막 것을 뽑는다
+            else:	# -1이라면
+                temp.pop(0)	# 처음 것을 뽑는다.
+    if len(temp) ==0:	# 다하고 난후 빈 배열 이면 [0,0] return
+        return [0,0]
+    else:
+        answer = [max(temp),min(temp)]	#아니라면 가장 큰값과 가장 작은 값 출력.
+    return answer
+
+
+#느낀점
+문자열과 숫자를 따로 어떻게 담을 까에 대한 생각을 많이 했었다. 입력이 알파벳 + spacebar로 되어
+있기 때문에 문자열을 2부터 시작하고 그 범위를 끝까지로 하면 정수만을 따로 받을 수 있었다.
+그리고 저번에 해석이가 알려준 continue를 처음 썼는데 유용했다. continue란 만약 조건을 만족하면
+밑에 있는 코드를 실행하지 않고 해당 시도는 끝내고 다시 다른 시도로 가는 것이다. 
+힙구조를 사용할 수도 있었는데 어떻게 최댓값을 사용해야 될 지 몰라 사용을 못했다. 
+
+#배울만한 코드.
+for operation in operations:
+        operator, operand = operation.split(' ')
+        operand = int(operand)
+
+이것은 띄어쓰기를 구분으로 데이터를 따로 담는 것이다. 
