@@ -1,0 +1,16 @@
+# 가장 큰 수 - 정렬 - 프로그래머스
+
+
+# 코드
+def solution(numbers):
+    numbers = list(map(str, numbers))
+    numbers.sort(key=lambda x: x*3, reverse=True)
+    return str(int(''.join(numbers)))
+
+
+# 배워야 할 것
+list(map(str,numbers)) -----> numbers안에 있는 요소를 str로 바꾼거를 list에 넣는다.
+numbers.sort(key = lambda x: x*3, reverse = True) str이기 때문에 3을 곱하면 12가 121212이러한 식으로 된다.
+"".join(배열)------>조인할 때 각 배열 마다 무엇을 넣을지 "_"이 부분이 결정. 만약 ":".join(numbers)였다면
+'9:80:77' 이러한 식으로 되었을 것이다. 
+마지막에 int형으로 한후 str로 한 것은 0000과 같은 경우의 수가 있기 때문이다. 

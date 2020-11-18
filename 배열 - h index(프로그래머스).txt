@@ -1,0 +1,33 @@
+배열 - h index
+
+# 내 풀이
+
+def solution(citations):
+    citations.sort(reverse=True) # 역순으로 배열
+    n = len(citations) 
+    k = n //2 # 중간부터 찾는 것이 가장 효율적 일것 같아서...
+    while True:
+        if citations[k-1] >= k: # 조건을 만족을 하지만 최대가 아닐 수 있으니 k + 1
+            if k == n: # 마지막인 경우에는 바로 리턴
+                return k
+            k += 1
+        else: # 조건을 만족 하지 못하니 k를 줄여준다. 
+            k -= 1
+            if citations[k-1] >= k: # 줄여줬는데 만족하면 바로 리턴
+                return k
+
+## 배울 것
+역시 마지막 경우의 수나 처음 경우의 수를 대입해야지 오류를 줄일 수 있다. 이번 경우에는
+if citations[k-1] >= k:
+            if k == n: 
+                return k
+이부분을 잘 찾아내지 못했다.
+
+
+# 다른사람 풀이.
+def solution(citations):
+  sorted_citations = sorted(citations, reverse=True)
+  for i in range(len(sorted_citations)):
+    if sorted_citations[i] <= i: # 논리 : 이것을 만족하면 뒤에는 i보다 큰 수는 없다. 그래서 모든 조건 만족.
+      return i
+  return len(sorted_citations) # 모든 수가 len(배열)보다 크면 그 수만큼 리턴. (최대이다)
