@@ -1,0 +1,73 @@
+from itertools import permutations
+
+def solution(numbers):
+    count = 0
+    numbers = list(numbers) # '911' 이 ['9','1','1']로 바뀐다.
+    temp = []
+    # list안에 있는 모든 수의 배열을 찾아야 한다. ex) 9 // 1 // 91 // 19
+    for i in range(1,len(numbers)+1): # 모든 자릿수를 표현하기위해
+        for j in permutations(numbers,i): # 그 자릿수에 대한 모든 경우의 수
+            j = list(j) # 튜플형이기 때문에 list로 바꿔주고 ex) ('9','1') 이러한 식으로 나오기 때문.
+            number = int(''.join(j)) # list안에 있는 str을 join함수를 이용해 합친후 정수형으로 바꾼다.
+            temp.append(number) # 그리고 미리 만들어 놓은 배열에 추가
+    temp = list(set(temp)) # 중복되는 숫자가 있기 때문에 set()함수를 통해 unique한 값을 얻는다.
+    for i in range(len(temp)): # 각 숫자 판별
+        if is_prime_number(temp[i]) == True:
+            count += 1
+    return count
+
+def is_prime_number(number):
+    if number == 2: # 2도 소수
+        return True
+    elif number < 2:
+        return False
+    else:
+        for i in range(2, number//2 + 1): # number //2 한 값까지만 검산을 하면 나머지는 하지 않아도 된다.
+            if number % i == 0:
+                return False
+    return True
+
+
+#####알아두면 좋을 것.
+1. '2937237' 이러한 문자열은 list()함수를 이용해 ['2','9','3', ....] 이렇게 분리가 가능하다.
+2. permutation 함수와 combination 함수는 tuple형으로 값이 반환되고 list()로 그 형태를 배열로 바꿀 수 있다.
+3. 배열 안에 있는 문자열을 합치기 위해서 "".join(array) 를 사용하면 된다.
+4. 유니크한 값을 얻기 위해서는 set()함수를 쓰면 된다. 그렇지만 순서는 보장을 못한다.
+
+# 해석이 코드
+from itertools import permutations as pt
+
+def solution(numbers):
+    answer = set() # 
+
+    n = len(numbers)
+    temp = []
+
+    for i in range(1, n+1):
+        if i == 1: # 
+            for num in numbers:
+                if (getprime(int(num)) > 0):
+                    answer.add(getprime(int(num)))
+        else:
+            temp = list(pt(numbers, i))
+            for num in temp:
+                number = ''
+                for n in num:
+                    number += n
+                if (getprime(int(number)) > 0):
+                    answer.add(getprime(int(number)))
+            
+        
+    return len(answer)
+
+
+def getprime(x):
+
+    if (x < 2):
+        return -1
+
+    for i in range(2, x//2+1):
+        if x % i == 0:
+            return -1
+    
+    return x
