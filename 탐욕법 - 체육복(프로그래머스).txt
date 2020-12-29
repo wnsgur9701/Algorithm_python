@@ -1,0 +1,25 @@
+# 탐욕법 - 체육복 - 큰 수 만들기
+
+
+def solution(n, lost, reserve):
+    answer = n - len(lost) # 총 인원수 - 도둑당한것을 초기값
+    while(lost):
+        if lost[0] in reserve: # 잃어버린 사람이 여분으로 가지고 있는사람이면
+            reserve.remove(lost[0])
+            lost.pop(0)
+            answer += 1
+        elif len(lost) >=2 and lost[0]+1 == lost[1] and lost[0]+1 in reserve:
+            reserve.remove(lost[1])
+            lost.pop(1)
+            answer += 1
+        elif lost[0]-1 in reserve:
+            reserve.remove(lost[0]-1)
+            lost.pop(0)
+            answer += 1
+        elif lost[0]+1 in reserve:
+            reserve.remove(lost[0]+1)
+            lost.pop(0)
+            answer += 1
+        else:
+            lost.pop(0)
+    return answer

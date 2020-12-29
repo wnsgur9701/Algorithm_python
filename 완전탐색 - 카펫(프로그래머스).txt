@@ -1,0 +1,24 @@
+# 완전탐색 - 카펫 - 프로그래머스
+
+def solution(brown, yellow):
+    answer = []
+    yellow_devi = devisor(yellow) # 배열 대입
+    for i in range(len(yellow_devi)):
+        if yellow_devi[i] <= yellow_devi[-1-i]: # 배열에서 양 끝에서부터 두 개씩 쌍를 이루기 때문에.
+            brown_count = yellow_devi[i]*2 + yellow_devi[-1-i]*2 + 4 # 가정한 brown의 개수
+            if brown_count == brown: # 실제 brown과 같으면 return
+                answer = [yellow_devi[-1-i]+2,yellow_devi[i]+2]
+                return answer
+
+def devisor(number): # 약수 구하기 [1,2,4,8]과 같이 들어온다.
+    devi_list = []
+    for i in range(1,number+1):
+        if number % i == 0:
+            devi_list.append(i)
+    return devi_list
+
+
+# 풀이
+논리만 알면 쉬운 문제였다. brown의 개수가 yellow의 가로*2 + yellow의 세로*2 + 4를 하면 된다는 것을 파악해야 한다.
+그리고 답을 구하면 yellow의 가로 세로에서 +2 한 값을 return 해주면 된다.
+보기 편하게 하기 위해 약수를 구하는 식은 따로 함수로 빼서 정리했다.
